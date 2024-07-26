@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { TaskService } from 'src/app/service/task.service';
 
 @Component({
   selector: 'app-create-task',
@@ -8,11 +9,14 @@ import { NgForm } from '@angular/forms';
 })
 export class CreateTaskComponent {
 
+  constructor(private taskService : TaskService) {}
+
   onFormSubmit(data : NgForm) {
 
-    console.log(data.value);
+    this.taskService.createTask(data.value).subscribe((res) => {
+      console.log(res);
 
-
+    })
   }
 
   OnCloseForm() {}
