@@ -1,0 +1,28 @@
+<div class="card container">
+
+  <div class="card my-2">
+    <div class="flex d-flex justify-content-between">
+      <h2 class="m-2">Dashboard</h2>
+      <div>
+        <button class="btn btn-secondary m-2" (click)="FetchTask()">Fetch Task</button>
+        <button class="btn btn-secondary m-2" (click)="createTask()">Create Task</button>
+        <button class="btn btn-secondary m-2" (click)="clearTask()">Clear Tasks</button>
+      </div>
+    </div>
+  </div>
+
+
+  <div class=" card task-item p-1"style="width: 18rem;">
+      <div class=" card-header task-title">
+        <h3>Titel</h3>
+      </div>
+      <p><b>Assigned to: </b>Srk</p>
+      <p><b>Priority: </b>Important</p>
+      <p><b>Status: </b>Completed</p>
+      <div class="task-actions">
+        <button class="btn btn-secondary m-2" (click)="showDetails()">Details</button>
+        <button class="btn btn-warning m-2" (click)="editDetails()">Edit</button>
+        <button class="btn btn-danger" (click)="deleteDetails()">Delete</button>
+      </div>
+  </div>
+</div>
