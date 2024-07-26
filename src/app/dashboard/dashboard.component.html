@@ -1,28 +1,36 @@
-<div class="card container">
+<app-task-details [taskDetails] = "selectedTask" (closeDetails)="closeDetailView()" *ngIf="showTaskDetails"></app-task-details>
+
+<div class="card container" *ngIf="!showTaskDetails">
 
   <div class="card my-2">
     <div class="flex d-flex justify-content-between">
       <h2 class="m-2">Dashboard</h2>
       <div>
-        <button class="btn btn-secondary m-2" (click)="FetchTask()">Fetch Task</button>
+        <button class="btn btn-secondary m-2" (click)="fetchTaskClicked()">Fetch Task</button>
         <button class="btn btn-secondary m-2" (click)="createTask()">Create Task</button>
         <button class="btn btn-secondary m-2" (click)="clearTask()">Clear Tasks</button>
       </div>
     </div>
   </div>
 
-
-  <div class=" card task-item p-1"style="width: 18rem;">
-      <div class=" card-header task-title">
-        <h3>Titel</h3>
-      </div>
-      <p><b>Assigned to: </b>Srk</p>
-      <p><b>Priority: </b>Important</p>
-      <p><b>Status: </b>Completed</p>
-      <div class="task-actions">
-        <button class="btn btn-secondary m-2" (click)="showDetails()">Details</button>
-        <button class="btn btn-warning m-2" (click)="editDetails()">Edit</button>
-        <button class="btn btn-danger" (click)="deleteDetails()">Delete</button>
-      </div>
+  <div class="d-flex">
+    <ng-container>
+      <div class="card task-item p-1 m-2"style="width: 18rem;" *ngFor="let task of AllTasks">
+        <div class=" card-header task-title">
+          <h3>{{task.title}}</h3>
+        </div>
+        <p><b>Assigned to: </b>{{task.assignedTo}}</p>
+        <p><b>Priority: </b>{{task.priority}}</p>
+        <p><b>Status: </b>{{task.status}}</p>
+        <div class="task-actions">
+          <button class="btn btn-secondary m-2" (click)="showDetails(task.id)">Details</button>
+          <button class="btn btn-warning m-2" (click)="editDetails(task.id)">Edit</button>
+          <button class="btn btn-danger" (click)="deleteDetails(task.id)">Delete</button>
+        </div>
+    </div>
+    </ng-container>
   </div>
+
+
+
 </div>

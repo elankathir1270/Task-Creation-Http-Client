@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { TaskService } from '../service/task.service';
+import { Task } from '../model/task';
 
 @Component({
   selector: 'app-dashboard',
@@ -7,23 +9,45 @@ import { Component } from '@angular/core';
 })
 export class DashboardComponent {
 
-  FetchTask() {}
+  AllTasks : Task[]
+  selectedTask : Task
+  showTaskDetails : boolean = false;
+
+  constructor(private taskService : TaskService) {}
+
+
+  fetchTask() {
+    this.taskService.getAllTasks().subscribe((tasks) => {
+      this.AllTasks = tasks;
+    })
+  }
+
+  fetchTaskClicked() {
+    this.fetchTask();
+  }
 
   createTask() {}
 
   clearTask() {}
 
 
-  showDetails() {
+  showDetails(id: string) {
+    this.showTaskDetails = true
+    this.selectedTask = this.AllTasks.find((task) => task.id === id)
+    //console.log(this.selectedTask);
 
   }
 
-  editDetails() {
+  editDetails(id: string) {
 
   }
 
-  deleteDetails() {
+  deleteDetails(id: string) {
 
+  }
+
+  closeDetailView() {
+    this.showTaskDetails = false
   }
 
 }
