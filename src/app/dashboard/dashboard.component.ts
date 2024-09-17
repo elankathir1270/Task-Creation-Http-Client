@@ -12,6 +12,8 @@ export class DashboardComponent {
   AllTasks : Task[]
   selectedTask : Task
   showTaskDetails : boolean = false;
+  showCreateTask : boolean = false;
+  editMode : boolean = false;
 
   constructor(private taskService : TaskService) {}
 
@@ -26,7 +28,20 @@ export class DashboardComponent {
     this.fetchTask();
   }
 
-  createTask() {}
+  createOrUpdateDetails(task : Task) {
+
+    if(!this.editMode) {
+      this.taskService.createTask(task)
+    }
+    else{
+      this.taskService.updateTask(task)
+    }
+    this.fetchTask()
+  }
+
+  createTask() {
+    this.showCreateTask = true;
+  }
 
   clearTask() {}
 
@@ -39,6 +54,10 @@ export class DashboardComponent {
   }
 
   editDetails(id: string) {
+    this.editMode = true
+    this.showCreateTask = true
+
+    this.selectedTask = this.AllTasks.find((task) => task.id === id);
 
   }
 
@@ -46,8 +65,9 @@ export class DashboardComponent {
 
   }
 
-  closeDetailView() {
+  closeChildView() {
     this.showTaskDetails = false
+    this.showCreateTask = false
   }
 
 }
