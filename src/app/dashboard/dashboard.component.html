@@ -1,6 +1,7 @@
-<app-task-details [taskDetails] = "selectedTask" (closeDetails)="closeDetailView()" *ngIf="showTaskDetails"></app-task-details>
+<app-task-details [taskDetails] = "selectedTask" (closeDetails)="closeChildView()" *ngIf="showTaskDetails"></app-task-details>
+<app-create-task [taskToUpdate] = "selectedTask" (formData)="createOrUpdateDetails($event)" (closeTaskForm)="closeChildView()" [isEditMode] = "editMode" *ngIf="showCreateTask"></app-create-task>
 
-<div class="card container" *ngIf="!showTaskDetails">
+<div class="card container" *ngIf="!showTaskDetails && !showCreateTask">
 
   <div class="card my-2">
     <div class="flex d-flex justify-content-between">

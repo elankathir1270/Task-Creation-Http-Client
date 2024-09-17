@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { Task } from 'src/app/model/task';
 import { TaskService } from 'src/app/service/task.service';
 
 @Component({
@@ -9,16 +10,31 @@ import { TaskService } from 'src/app/service/task.service';
 })
 export class CreateTaskComponent {
 
+  @Input() isEditMode : boolean;
+  @Input() taskToUpdate : Task;
+  @Output() closeTaskForm : EventEmitter<boolean> = new EventEmitter<boolean>();
+  @Output() formData : EventEmitter<Task> = new EventEmitter<Task>();
+  @ViewChild('taskForm') taskForm : NgForm;
+
   constructor(private taskService : TaskService) {}
+
+  ngAfterViewInit() {
+    setTimeout(() => {
+      this.taskForm.form.patchValue(this.taskToUpdate);
+    },0)
+  }
 
   onFormSubmit(data : NgForm) {
 
-    this.taskService.createTask(data.value).subscribe((res) => {
-      console.log(res);
-
-    })
+    this.formData.emit(data.value);
+    this.closeTaskForm.emit(false);
+    // this.taskService.createTask(data.value).subscribe((res) => {
+    //   console.log(res);
+    // })
   }
 
-  OnCloseForm() {}
+  OnCloseForm() {
+    this.closeTaskForm.emit(false);
+  }
 
 }

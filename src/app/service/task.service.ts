@@ -12,7 +12,13 @@ export class TaskService {
 
   createTask(task : Task) {
     return this.http.post<{name : string}>('https://angularhttpclient-6d23d-default-rtdb.asia-southeast1.firebasedatabase.app/tasks.json',
-      task)
+      task).subscribe()
+  }
+
+  updateTask(task : Task) {
+    return this.http.put(`https://angularhttpclient-6d23d-default-rtdb.asia-southeast1.firebasedatabase.app/tasks/${task.id}.json`,
+      task
+    ).subscribe()
   }
 
   getAllTasks() {
