@@ -1,4 +1,4 @@
-import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Task } from '../model/task';
 import { map, Subject } from 'rxjs';
@@ -42,7 +42,13 @@ export class TaskService {
    Note : when we use set method if key value is same it will replace existing value to new one
    whereas in append method it will append the value with existing one
    */
-    return this.http.get<{[key : string] : Task }>('https://angularhttpclient-6d23d-default-rtdb.asia-southeast1.firebasedatabase.app/tasks.json',{headers : headers})
+    //setting queryParam
+    let queryParams = new HttpParams();
+    queryParams = queryParams.set('page',1)
+    queryParams = queryParams.set('item',10)
+
+    return this.http.get<{[key : string] : Task }>('https://angularhttpclient-6d23d-default-rtdb.asia-southeast1.firebasedatabase.app/tasks.json',
+      {headers : headers, params : queryParams})
     .pipe(map((res) => {
       const tasks : Task[] = [];
 
