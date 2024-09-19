@@ -1,24 +1,30 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Task } from '../model/task';
-import { map } from 'rxjs';
+import { map, Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TaskService {
 
+  errorSubject = new Subject<HttpErrorResponse>();
+
   constructor(private http : HttpClient) { }
 
   createTask(task : Task) {
-    return this.http.post<{name : string}>('https://angularhttpclient-6d23d-default-rtdb.asia-southeast1.firebasedatabase.app/tasks.json',
-      task).subscribe()
+    //setting headers to the request
+    const headers = new HttpHeaders({'my-header' : 'hello world'});
+    this.http.post<{name : string}>('https://angularhttpclient-6d23d-default-rtdb.asia-southeast1.firebasedatabase.app/tasks.json',
+      task, {headers : headers}).subscribe({
+        error : (err) => this.errorSubject.next(err)
+      })
   }
 
-  updateTask(task : Task) {
-    return this.http.put(`https://angularhttpclient-6d23d-default-rtdb.asia-southeast1.firebasedatabase.app/tasks/${task.id}.json`,
+  updateTask(id : string, task : Task) {
+    return this.http.put(`https://angularhttpclient-6d23d-default-rtdb.asia-southeast1.firebasedatabase.app/tasks/${id}.json`,
       task
-    ).subscribe()
+    )
   }
 
   getAllTasks() {
@@ -34,5 +40,17 @@ export class TaskService {
       return tasks
 
     }))
+  }
+
+  deleteTask(id: string) {
+    this.http.delete(`https://angularhttpclient-6d23d-default-rtdb.asia-southeast1.firebasedatabase.app/tasks/${id}.json`).subscribe({
+      error : (err) => this.errorSubject.next(err)
+    });
+  }
+
+  deleteAllTasks() {
+    this.http.delete(`https://angularhttpclient-6d23d-default-rtdb.asia-southeast1.firebasedatabase.app/tasks.json`).subscribe({
+      error : (err) => this.errorSubject.next(err)
+    })
   }
 }

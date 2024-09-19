@@ -1,7 +1,7 @@
 export class Task{
   constructor(
     public title: string,
-    public desc: string,
+    public description: string,
     public assignedTo: string,
     public createdAt: string,
     public priority: string,
