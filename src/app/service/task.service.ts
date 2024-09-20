@@ -1,7 +1,7 @@
-import { HttpClient, HttpErrorResponse, HttpHeaders, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpEventType, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Task } from '../model/task';
-import { map, Subject } from 'rxjs';
+import { map, Subject, tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -63,7 +63,16 @@ export class TaskService {
   }
 
   deleteTask(id: string) {
-    this.http.delete(`https://angularhttpclient-6d23d-default-rtdb.asia-southeast1.firebasedatabase.app/tasks/${id}.json`).subscribe({
+    this.http.delete(`https://angularhttpclient-6d23d-default-rtdb.asia-southeast1.firebasedatabase.app/tasks/${id}.json`,
+      //setting observe type and response type
+      {observe : 'events', responseType : 'json'} // {observe : 'body', responseType : 'text'}
+    ).pipe(tap((event) => {
+      console.log(event.type);
+      if(event.type === HttpEventType.Sent){
+        //logic to update UI
+      }
+    }))
+    .subscribe({
       error : (err) => this.errorSubject.next(err)
     });
   }
