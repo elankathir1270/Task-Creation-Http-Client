@@ -52,7 +52,7 @@ export class DashboardComponent implements OnInit {
   createOrUpdateDetails(task : Task) {
 
     if(!this.editMode) {
-      this.taskService.createTask(task)
+      this.taskService.createTask(task);
     }
     else{
       this.taskService.updateTask(this.selectedTask.id,task).subscribe({

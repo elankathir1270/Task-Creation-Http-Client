@@ -1,0 +1,29 @@
+.footer {
+  background-color: #343a40; /* Dark background */
+  color: white;
+  padding: 20px 0;
+}
+
+.social-icon {
+  padding: 0;
+  list-style: none;
+}
+
+.social-icon__item {
+  display: inline-block;
+  margin: 0 10px;
+}
+
+.social-icon__link {
+  color: #ffffff;
+  text-decoration: none;
+}
+
+.social-icon__link:hover {
+  color: #007bff; /* Highlight color on hover */
+}
+
+p {
+  margin-top: 15px;
+}
+

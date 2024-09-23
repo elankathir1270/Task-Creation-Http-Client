@@ -20,7 +20,9 @@ export class CreateTaskComponent {
 
   ngAfterViewInit() {
     setTimeout(() => {
-      this.taskForm.form.patchValue(this.taskToUpdate);
+      if(this.isEditMode){
+        this.taskForm.form.patchValue(this.taskToUpdate);
+      }
     },0)
   }
 
@@ -28,6 +30,7 @@ export class CreateTaskComponent {
 
     this.formData.emit(data.value);
     this.closeTaskForm.emit(false);
+    this.taskForm.reset()
     // this.taskService.createTask(data.value).subscribe((res) => {
     //   console.log(res);
     // })

@@ -10,13 +10,25 @@ import { FormsModule } from '@angular/forms';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { AuthInterceptor } from './service/auth-interceptor.service';
 import { LoginInterceptor } from './service/login-interceptor.service';
+import { HomeComponent } from './home/home.component';
+import { HeaderComponent } from './header/header.component';
+import { FooterComponent } from './footer/footer.component';
+import { LoginComponent } from './login/login.component';
+import { LoaderComponent } from './utility/loader/loader.component';
+import { ErrorIndicatorComponent } from './utility/error-indicator/error-indicator.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     DashboardComponent,
     CreateTaskComponent,
-    TaskDetailsComponent
+    TaskDetailsComponent,
+    HomeComponent,
+    HeaderComponent,
+    FooterComponent,
+    LoginComponent,
+    LoaderComponent,
+    ErrorIndicatorComponent
   ],
   imports: [
     BrowserModule,
@@ -25,8 +37,8 @@ import { LoginInterceptor } from './service/login-interceptor.service';
     FormsModule
   ],
   providers: [
-    {provide : HTTP_INTERCEPTORS, useClass : AuthInterceptor, multi : true},
-    {provide : HTTP_INTERCEPTORS, useClass : LoginInterceptor,multi : true}
+    // {provide : HTTP_INTERCEPTORS, useClass : AuthInterceptor, multi : true},
+    // {provide : HTTP_INTERCEPTORS, useClass : LoginInterceptor,multi : true}
   ],
   bootstrap: [AppComponent]
 })

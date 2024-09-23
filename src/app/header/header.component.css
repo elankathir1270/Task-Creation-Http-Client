@@ -1,0 +1,18 @@
+.app-header {
+  background-color: #f8f9fa; /* Light background for navbar */
+  padding: 10px 0;
+}
+
+.navbar-brand h2 {
+  font-size: 1.5rem;
+  color: #343a40; /* Dark color for logo text */
+}
+
+.nav-link {
+  font-size: 1.1rem;
+  color: #343a40; /* Dark color for navigation links */
+}
+
+.nav-link:hover {
+  color: #007bff; /* Highlight color on hover */
+}
