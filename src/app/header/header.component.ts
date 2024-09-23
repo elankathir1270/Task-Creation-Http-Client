@@ -15,6 +15,7 @@ export class HeaderComponent {
 
   ngOnInit(){
     this.userSubject = this.authService.user.subscribe((user) => {
+      console.log(user);
       this.isLoggedIn = user ? true : false;
     })
   }

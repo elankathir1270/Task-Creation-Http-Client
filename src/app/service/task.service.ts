@@ -1,7 +1,8 @@
 import { HttpClient, HttpErrorResponse, HttpEventType, HttpHeaders, HttpParams } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { Task } from '../model/task';
-import { map, Subject, tap } from 'rxjs';
+import { exhaustMap, map, Subject, take, tap } from 'rxjs';
+import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -9,6 +10,7 @@ import { map, Subject, tap } from 'rxjs';
 export class TaskService {
 
   errorSubject = new Subject<HttpErrorResponse>();
+  authService : AuthService = inject(AuthService);
 
   constructor(private http : HttpClient) { }
 
@@ -28,11 +30,32 @@ export class TaskService {
   }
 
   getAllTasks() {
+
+    return this.authService.user.pipe(take(1),exhaustMap((user) => {
+      return this.http.get<{[key : string] : Task }>('https://task-management-4c6f3-default-rtdb.firebaseio.com/tasks.json',
+        {params : new HttpParams().set('auth',user.token)}
+      )
+      .pipe(map((res) => {
+        const tasks : Task[] = [];
+
+        for(let key in res) {
+          tasks.push({...res[key], id: key})
+        }
+
+        //console.log(tasks);
+        return tasks
+
+      }))
+
+    }))
+
+
+
     //setting headers to get request
-    let headers = new HttpHeaders();
-    headers = headers.set('content-type', 'application/json')
-    headers = headers.set('content-type', 'text/html')
-    headers = headers.set('allow-edit','*')
+    // let headers = new HttpHeaders();
+    // headers = headers.set('content-type', 'application/json')
+    // headers = headers.set('content-type', 'text/html')
+    // headers = headers.set('allow-edit','*')
     /*
     headers = headers.append('content-type', 'application/json')
     headers = headers.append('content-type', 'text/html')
@@ -43,23 +66,23 @@ export class TaskService {
    whereas in append method it will append the value with existing one
    */
     //setting queryParam
-    let queryParams = new HttpParams();
-    queryParams = queryParams.set('page',1)
-    queryParams = queryParams.set('item',10)
+    // let queryParams = new HttpParams();
+    // queryParams = queryParams.set('page',1)
+    // queryParams = queryParams.set('item',10)
 
-    return this.http.get<{[key : string] : Task }>('https://task-management-4c6f3-default-rtdb.firebaseio.com/tasks.json',
-      {headers : headers, params : queryParams})
-    .pipe(map((res) => {
-      const tasks : Task[] = [];
+    // return this.http.get<{[key : string] : Task }>('https://task-management-4c6f3-default-rtdb.firebaseio.com/tasks.json',
+    //   {headers : headers, params : queryParams})
+    // .pipe(map((res) => {
+    //   const tasks : Task[] = [];
 
-      for(let key in res) {
-        tasks.push({...res[key], id: key})
-      }
+    //   for(let key in res) {
+    //     tasks.push({...res[key], id: key})
+    //   }
 
-      //console.log(tasks);
-      return tasks
+    //   //console.log(tasks);
+    //   return tasks
 
-    }))
+    // }))
   }
 
   deleteTask(id: string) {
