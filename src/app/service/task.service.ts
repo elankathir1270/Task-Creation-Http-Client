@@ -15,14 +15,14 @@ export class TaskService {
   createTask(task : Task) {
     //setting headers to the request
     const headers = new HttpHeaders({'my-header' : 'hello world'});
-    this.http.post<{name : string}>('https://angularhttpclient-6d23d-default-rtdb.asia-southeast1.firebasedatabase.app/tasks.json',
+    this.http.post<{name : string}>('https://task-management-4c6f3-default-rtdb.firebaseio.com/tasks.json',
       task, {headers : headers}).subscribe({
         error : (err) => this.errorSubject.next(err)
       })
   }
 
   updateTask(id : string, task : Task) {
-    return this.http.put(`https://angularhttpclient-6d23d-default-rtdb.asia-southeast1.firebasedatabase.app/tasks/${id}.json`,
+    return this.http.put(`https://task-management-4c6f3-default-rtdb.firebaseio.com/tasks/${id}.json`,
       task
     )
   }
@@ -47,7 +47,7 @@ export class TaskService {
     queryParams = queryParams.set('page',1)
     queryParams = queryParams.set('item',10)
 
-    return this.http.get<{[key : string] : Task }>('https://angularhttpclient-6d23d-default-rtdb.asia-southeast1.firebasedatabase.app/tasks.json',
+    return this.http.get<{[key : string] : Task }>('https://task-management-4c6f3-default-rtdb.firebaseio.com/tasks.json',
       {headers : headers, params : queryParams})
     .pipe(map((res) => {
       const tasks : Task[] = [];
@@ -63,7 +63,7 @@ export class TaskService {
   }
 
   deleteTask(id: string) {
-    this.http.delete(`https://angularhttpclient-6d23d-default-rtdb.asia-southeast1.firebasedatabase.app/tasks/${id}.json`,
+    this.http.delete(`https://task-management-4c6f3-default-rtdb.firebaseio.com/tasks/${id}.json`,
       //setting observe type and response type
       {observe : 'events', responseType : 'json'} // {observe : 'body', responseType : 'text'}
     ).pipe(tap((event) => {
@@ -78,7 +78,7 @@ export class TaskService {
   }
 
   deleteAllTasks() {
-    this.http.delete(`https://angularhttpclient-6d23d-default-rtdb.asia-southeast1.firebasedatabase.app/tasks.json`).subscribe({
+    this.http.delete(`https://task-management-4c6f3-default-rtdb.firebaseio.com/tasks.json`).subscribe({
       error : (err) => this.errorSubject.next(err)
     })
   }
