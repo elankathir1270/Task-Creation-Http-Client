@@ -98,6 +98,7 @@ export class DashboardComponent implements OnInit {
   }
 
   setErrorMessage(err : HttpErrorResponse) {
+    //console.log(err);
     this.errorMsg = err.error.error
     setTimeout(() => {
       this.errorMsg = null;

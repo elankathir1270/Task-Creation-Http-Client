@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { AuthResponse } from '../model/AuthResponse';
-import { catchError, Subject, tap, throwError } from 'rxjs';
+import { BehaviorSubject, catchError, Subject, tap, throwError } from 'rxjs';
 import { User } from '../model/User';
 
 @Injectable({
@@ -10,7 +10,7 @@ import { User } from '../model/User';
 export class AuthService {
 
   http : HttpClient = inject(HttpClient);
-  user : Subject<User> = new Subject<User>();
+  user : BehaviorSubject<User> = new BehaviorSubject<User>(null);
 
   constructor() { }
 
