@@ -16,6 +16,7 @@ import { FooterComponent } from './footer/footer.component';
 import { LoginComponent } from './login/login.component';
 import { LoaderComponent } from './utility/loader/loader.component';
 import { ErrorIndicatorComponent } from './utility/error-indicator/error-indicator.component';
+import { CommonModule } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -31,14 +32,15 @@ import { ErrorIndicatorComponent } from './utility/error-indicator/error-indicat
     ErrorIndicatorComponent
   ],
   imports: [
+    CommonModule,
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     FormsModule
   ],
   providers: [
-    // {provide : HTTP_INTERCEPTORS, useClass : AuthInterceptor, multi : true},
-    // {provide : HTTP_INTERCEPTORS, useClass : LoginInterceptor,multi : true}
+    //{provide : HTTP_INTERCEPTORS, useClass : AuthInterceptor, multi : true},
+    {provide : HTTP_INTERCEPTORS, useClass : LoginInterceptor,multi : true}
   ],
   bootstrap: [AppComponent]
 })
