@@ -37,8 +37,8 @@ import { ErrorIndicatorComponent } from './utility/error-indicator/error-indicat
     FormsModule
   ],
   providers: [
-    // {provide : HTTP_INTERCEPTORS, useClass : AuthInterceptor, multi : true},
-    // {provide : HTTP_INTERCEPTORS, useClass : LoginInterceptor,multi : true}
+    //{provide : HTTP_INTERCEPTORS, useClass : AuthInterceptor, multi : true},
+    {provide : HTTP_INTERCEPTORS, useClass : LoginInterceptor,multi : true}
   ],
   bootstrap: [AppComponent]
 })

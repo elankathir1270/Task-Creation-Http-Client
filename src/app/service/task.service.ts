@@ -30,11 +30,7 @@ export class TaskService {
   }
 
   getAllTasks() {
-
-    return this.authService.user.pipe(take(1),exhaustMap((user) => {
-      return this.http.get<{[key : string] : Task }>('https://task-management-4c6f3-default-rtdb.firebaseio.com/tasks.json',
-        {params : new HttpParams().set('auth',user.token)}
-      )
+    return this.http.get<{[key : string] : Task }>('https://task-management-4c6f3-default-rtdb.firebaseio.com/tasks.json')
       .pipe(map((res) => {
         const tasks : Task[] = [];
 
@@ -46,9 +42,6 @@ export class TaskService {
         return tasks
 
       }))
-
-    }))
-
 
 
     //setting headers to get request
