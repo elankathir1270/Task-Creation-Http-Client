@@ -1,0 +1,41 @@
+<app-task-details [taskDetails] = "selectedTask" (closeDetails)="closeChildView()" *ngIf="showTaskDetails"></app-task-details>
+<app-create-task [taskToUpdate] = "selectedTask" (formData)="createOrUpdateDetails($event)" (closeTaskForm)="closeChildView()" [isEditMode] = "editMode" *ngIf="showCreateTask"></app-create-task>
+
+<div class="card container" *ngIf="!showTaskDetails && !showCreateTask">
+
+  <div class="card my-2">
+    <div class="flex d-flex justify-content-between">
+      <h2 class="m-2">Dashboard</h2>
+      <div>
+        <button class="btn btn-secondary m-2" (click)="fetchTaskClicked()">Fetch Task</button>
+        <button class="btn btn-secondary m-2" (click)="createTask()">Create Task</button>
+        <button class="btn btn-secondary m-2" (click)="clearTasks()">Clear Tasks</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="d-flex">
+    <app-error-indicator [errorMsg]="errorMsg" *ngIf="errorMsg"></app-error-indicator>
+    <div *ngIf="AllTasks == undefined">
+      No Tasks has been created yet!
+    </div>
+    <app-loader *ngIf="isLoading"></app-loader>
+    <ng-container *ngIf="!isLoading">
+      <div class="card task-item p-1 m-2"style="width: 18rem;" *ngFor="let task of AllTasks">
+        <div class=" card-header task-title">
+          <h3>{{task.title}}</h3>
+        </div>
+        <p><b>Assigned to: </b>{{task.assignedTo}}</p>
+        <p><b>Priority: </b>{{task.priority}}</p>
+        <p><b>Status: </b>{{task.status}}</p>
+        <div class="task-actions">
+          <button class="btn btn-secondary m-2" (click)="showDetails(task)">Details</button>
+          <button class="btn btn-warning m-2" (click)="editDetails(task.id)">Edit</button>
+          <button class="btn btn-danger" (click)="deleteDetails(task.id)">Delete</button>
+        </div>
+    </div>
+    </ng-container>
+  </div>
+
+</div>
+
