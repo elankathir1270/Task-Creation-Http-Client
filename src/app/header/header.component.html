@@ -1,33 +1,22 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light app-header">
-  <div class="container-fluid">
-
-    <!-- Logo Section -->
-    <a class="navbar-brand" href="#">
-      <h2>Task Management</h2>
-    </a>
-
-    <!-- Navbar Toggle for Mobile View -->
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-
-    <!-- Navbar Links -->
-    <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav ms-auto">
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/">HOME</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/dashboard" *ngIf="isLoggedIn">DASHBOARD</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/login" *ngIf="!isLoggedIn">LOGIN</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" *ngIf="isLoggedIn" (click)="onLogout()">LOGOUT</a>
-        </li>
-      </ul>
-    </div>
+<div class="app-header">
+  <!--APP LOGO-->
+  <div class="app-header-logo">
+    <h2>Task Management</h2>
   </div>
-</nav>
 
+  <!--APP NAVBAR-->
+  <div class="app-header-navbar">
+    <a routerLink="/">HOME</a>
+
+    <div class="dropdown" *ngIf="isLoggedIn">
+      <button class="dropbtn">DASHBOARD</button>
+      <div class="dropdown-content">
+        <a routerLink="dashboard/overview">OVERVIEW</a>
+        <a routerLink="dashboard/stats">STATS</a>
+      </div>
+    </div>
+
+    <a routerLink="/login" *ngIf="!isLoggedIn">LOGIN</a>
+    <a *ngIf="isLoggedIn" (click)="onLogout()">LOGOUT</a>
+  </div>
+</div>

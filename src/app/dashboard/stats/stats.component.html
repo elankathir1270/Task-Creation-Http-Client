@@ -1,0 +1,36 @@
+<div class="container status-content mt-4">
+  <h2 class="text-center mb-4">Task Status & Percentage</h2>
+
+  <table class="table table-bordered table-hover">
+    <thead class="thead-dark">
+      <tr>
+        <th>Status</th>
+        <th>Count</th>
+        <th>Percentage</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Open</td>
+        <td>{{ open }}</td>
+        <td>{{ (open / total * 100).toFixed(2) }} %</td>
+      </tr>
+      <tr>
+        <td>Started</td>
+        <td>{{ started }}</td>
+        <td>{{ (started / total * 100).toFixed(2) }} %</td>
+      </tr>
+      <tr>
+        <td>In Progress</td>
+        <td>{{ inprogress }}</td>
+        <td>{{ (inprogress / total * 100).toFixed(2) }} %</td>
+      </tr>
+      <tr>
+        <td>Closed</td>
+        <td>{{ closed }}</td>
+        <td>{{ (closed / total * 100).toFixed(2) }} %</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
