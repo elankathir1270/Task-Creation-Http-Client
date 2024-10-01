@@ -4,6 +4,7 @@ import { AuthResponse } from '../model/AuthResponse';
 import { BehaviorSubject, catchError, Subject, tap, throwError } from 'rxjs';
 import { User } from '../model/User';
 import { Router } from '@angular/router';
+import { environment } from 'src/environments/environment.development';
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +20,7 @@ export class AuthService {
 
   signup(email : string, password : string){
     const data = {email : email, password : password, returnSecureToken : true}
-    return this,this.http.post<AuthResponse>(`https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyDFvwShdap0cEW-c26CXP1mxMFtTG9Vfxg`,data)
+    return this,this.http.post<AuthResponse>(`https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${environment.firebaseApiKey}`,data)
     .pipe(catchError(this.handleError),tap((res) => {
       this.handleCreateUser(res);
     }));
@@ -27,7 +28,7 @@ export class AuthService {
 
   login(email : string, password : string){
     const data = {email : email, password : password, returnSecureToken : true}
-    return this,this.http.post<AuthResponse>(`https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyDFvwShdap0cEW-c26CXP1mxMFtTG9Vfxg`,data)
+    return this,this.http.post<AuthResponse>(`https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${environment.firebaseApiKey}`,data)
     .pipe(catchError(this.handleError),tap((res) => {
       this.handleCreateUser(res);
     }));
